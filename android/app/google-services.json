@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "417961586262",
+    "firebase_url": "https://makanforfree-72027.firebaseio.com",
+    "project_id": "makanforfree-72027",
+    "storage_bucket": "makanforfree-72027.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:417961586262:android:a2cb1cb636f9827178d5f7",
+        "android_client_info": {
+          "package_name": "com.neohaojun.makanforfree"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "417961586262-23aohap3l5qqb9b3e8di9nnc4787gj83.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWvkwC2T8vgK1s69T_fgeg0IymdtMyj3s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "417961586262-23aohap3l5qqb9b3e8di9nnc4787gj83.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
