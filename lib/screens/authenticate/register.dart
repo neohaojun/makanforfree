@@ -31,21 +31,6 @@ class _RegisterState extends State<Register > {
         backgroundColor: Colors.grey[700],
         elevation: 0.0,
         title: Text('Create an Account'),
-        actions: <Widget>[
-           FlatButton.icon(
-             icon: Icon(
-               Icons.person,
-               color: Colors.white,
-               ),
-             label: Text(
-               'Sign In',
-               style: TextStyle(color: Colors.white),
-               ),
-             onPressed: () {
-               widget.toggleView();
-             }
-           )
-        ],
       ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0,),
@@ -64,7 +49,7 @@ class _RegisterState extends State<Register > {
               SizedBox(height: 20.0),
               TextFormField(
                 decoration: textInputDecoration.copyWith(hintText: 'Password (> 6  characters)'),
-                validator: (val) => val.length < 6 ? 'Password must be at least 6 character.' : null,
+                validator: (val) => val.length < 6 ? 'Password must be at least 6 characters.' : null,
                 obscureText: true,
                 onChanged: (val) {
                   setState(() => password = val);
@@ -90,7 +75,16 @@ class _RegisterState extends State<Register > {
                   }
                 }
               ),
-              SizedBox(height: 12.0),
+              FlatButton(
+                child: Text(
+                  'Have an Account? Sign In',
+                  style: TextStyle(color: Colors.grey),
+                ),
+                onPressed: () {
+                 widget.toggleView();
+                }
+              ),
+              SizedBox(height: 10.0),
               Text(
                 error,
                 style: TextStyle(color: Colors.red, fontSize: 14.0),
