@@ -1,7 +1,6 @@
 # makanforfree
 
-PW 2020 (Cat 9, Infocomm)
-Members: Hao Jun, Justin, Jeric, Gabriel
+PW 2020
 
 ## Getting Started
 
