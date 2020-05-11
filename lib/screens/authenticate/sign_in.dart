@@ -1,7 +1,10 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:makanforfree/services/auth.dart';
 import 'package:makanforfree/shared/constants.dart';
 import 'package:makanforfree/shared/loading.dart';
+// import 'package:makanforfree/shared/app_icons_icons.dart';
 
 class SignIn extends StatefulWidget {
 
@@ -13,6 +16,16 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  TextEditingController _emailController;
+  TextEditingController _passwordController;
+
+  @override
+  void initState() { 
+    super.initState();
+    _emailController = TextEditingController(text: "");
+    _passwordController = TextEditingController(text: "");
+  }
+
 
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
@@ -21,7 +34,12 @@ class _SignInState extends State<SignIn> {
   //text field state
   String email = '';
   String password = '';
-  String error = '';
+  String error1 = '';
+  String error2 = '';
+  double errorBox1 = 0.0;
+  double errorBox2 = 0.0;
+  double errorBox3 = 0.0;
+  double errorBox4 = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -36,60 +54,112 @@ class _SignInState extends State<SignIn> {
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0,),
         child: Form(
           key: _formKey,
-          child: Column(
-            children: <Widget>[
-              SizedBox(height: 20.0),
-              TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: 'Email'),
-                validator: (val) => val.isEmpty ? 'Enter a valid email.' : null,
-                onChanged: (val) {
-                  setState(() => email = val);
-                }
-              ),
-              SizedBox(height: 20.0),
-              TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: 'Password'),
-                validator: (val) => val.length < 6 ? 'Password must be at least 6 characters.' : null,
-                obscureText: true,
-                onChanged: (val) {
-                  setState(() => password = val);
-                }
-              ),
-              SizedBox(height: 20.0),
-              RaisedButton(
-                color: Colors.pink[400],
-                child: Text(
+          child: SingleChildScrollView(
+            child: Column(
+              // mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(height: 20.0),
+                Text(
                   'Sign In',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23.0),
                 ),
-                onPressed: () async {
-                  if (_formKey.currentState.validate()) {
-                    setState(() => loading = true);
-                    dynamic result = await _auth.signInWithEmailAndPassword(email, password);
-                    if (result == null) {
-                      setState(() {
-                        error = 'Sorry, your password or email was incorrect.';
-                        loading = false;
-                      });
-                    }
+                Divider(color: Colors.grey[600]),
+                SizedBox(height: 10.0),
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(hintText: 'Email'),
+                  controller: _emailController,
+                  validator: (val) => val.isEmpty ? 'Enter a valid email.' : null,
+                  onChanged: (val) {
+                    setState(() => email = val);
                   }
-                }
-              ),
-              FlatButton(
-                child: Text(
-                  'Create an account',
-                  style: TextStyle(color: Colors.grey),
                 ),
-                onPressed: () {
-                 widget.toggleView();
-                }
-              ),
-              SizedBox(height: 10.0),
-              Text(
-                error,
-                style: TextStyle(color: Colors.red, fontSize: 14.0),
-              ),
-            ],
+                SizedBox(height: 20.0),
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(hintText: 'Password'),
+                  controller: _passwordController,
+                  validator: (val) => val.length < 6 ? 'Password must be at least 6 characters.' : null,
+                  obscureText: true,
+                  onChanged: (val) {
+                    setState(() => password = val);
+                  }
+                ),
+                SizedBox(height: errorBox1),
+                Text(
+                  error1,
+                  style: TextStyle(color: Colors.red, fontSize: 14.0),
+                ),
+                SizedBox(height: errorBox2),
+                ButtonTheme(
+                  minWidth: double.infinity,
+                  height: 40.0,
+                  child: RaisedButton.icon(
+                   color: Colors.pink[200],
+                    label: Text(
+                      'SIGN IN WITH EMAIL',
+                      style: TextStyle(fontSize: 15, color: Colors.black),
+                    ),
+                    shape: RoundedRectangleBorder(side: BorderSide(color: Colors.grey[600])),
+                    icon: Icon(
+                      Icons.mail_outline,
+                      color: Colors.black
+                    ),
+                    onPressed: () async {
+                      if (_formKey.currentState.validate()) {
+                        setState(() => loading = true);
+                        dynamic result = await _auth.signInWithEmailAndPassword(email, password);
+                        if (result == null) {
+                          setState(() {
+                            error1 = 'Sorry, your password or email was incorrect.';
+                            errorBox1 = 20.0;
+                            errorBox2 = 20.0;
+                            loading = false;
+                          });
+                        }
+                      }
+                    }
+                  ),
+                ),
+                ButtonTheme(
+                  minWidth: double.infinity,
+                  height: 40.0,
+                  child: RaisedButton.icon(
+                    color: Colors.white,
+                    label: Text(
+                      'CONTINUE WITH GOOGLE',
+                      style: TextStyle(fontSize: 15, color: Colors.black),
+                    ),
+                    shape: RoundedRectangleBorder(side: BorderSide(color: Colors.grey[600])),
+                    icon: SvgPicture.asset(
+                      "assets/icons/google_search.svg",
+                      height: 18.0
+                    ),
+                    onPressed: () async {
+                    bool res = await _auth.signInWithGoogle();
+                    if(!res)
+                      error2 = "Error signing in with google";
+                      errorBox3 = 20.0;
+                      errorBox4 = 20.0;
+                    },
+                  ),
+                ),
+                SizedBox(height: errorBox3),
+                Text(
+                  error2,
+                  style: TextStyle(color: Colors.red, fontSize: 14.0),
+                ),
+                SizedBox(height: errorBox4),
+                FlatButton(
+                  child: Text(
+                    "Don't have an account? Sign up",
+                    style: TextStyle(color: Colors.blue),
+                  ),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+                  onPressed: () {
+                   widget.toggleView();
+                  }
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "417961586262-d3dmugcebtn4cq3tt3crrd7q1mhe46si.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.neohaojun.makanforfree",
+            "certificate_hash": "d04b18766756eb341610982d485ae305813bbfda"
+          }
+        },
+        {
           "client_id": "417961586262-23aohap3l5qqb9b3e8di9nnc4787gj83.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -30,6 +38,13 @@
             {
               "client_id": "417961586262-23aohap3l5qqb9b3e8di9nnc4787gj83.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "417961586262-nm0d7p2qtp8cvt3ucjjre31vlap2n1dt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.neohaojun.makanforfree"
+              }
             }
           ]
         }

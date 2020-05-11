@@ -1,4 +1,6 @@
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:makanforfree/models/user.dart';
 
 class AuthService {
@@ -14,18 +16,6 @@ class AuthService {
   Stream<User> get user {
     return _auth.onAuthStateChanged
     .map(_userFromFirebaseUser);
-  }
-
-  //sign in annonymously
-  Future signInAnon() async {
-    try {
-      AuthResult result = await _auth.signInAnonymously();
-      FirebaseUser user = result.user;
-      return user;
-    } catch(e) {
-      print(e.toString());
-      return null;
-    }
   }
 
   //sign in with email & password
@@ -49,6 +39,28 @@ class AuthService {
     } catch(e) {
       print(e.toString());
       return null;
+    }
+  }
+
+  //sign in with google
+  Future<bool> signInWithGoogle() async {
+    try {
+      GoogleSignIn googleSignIn = GoogleSignIn();
+      GoogleSignInAccount account = await googleSignIn.signIn();
+      if(account == null)
+        return false;
+      AuthResult result = await _auth.signInWithCredential(GoogleAuthProvider.getCredential(
+        idToken: (await account.authentication).idToken,
+        accessToken: (await account.authentication).accessToken,
+      ));
+      // FirebaseUser user = result.user;
+      if(result.user == null)
+        return false;
+        return true;
+    } catch (e) {
+      print(e.message);
+      print("Error logging with google");
+      return false;
     }
   }
 
