@@ -2,10 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:makanforfree/services/auth.dart';
 import 'form_material.dart';
+import 'package:makanforfree/shared/loading.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
 
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +30,7 @@ class Home extends StatelessWidget {
             ),
             onPressed: () async {
               await _auth.signOut();
+              setState(() => loading = true);
             },
           )
         ],

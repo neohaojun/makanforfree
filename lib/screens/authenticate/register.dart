@@ -66,7 +66,7 @@ class _RegisterState extends State<Register > {
                 TextFormField(
                   decoration: textInputDecoration.copyWith(hintText: 'Email'),
                   controller: _emailController,
-                  validator: (val) => val.isEmpty ? 'Enter a valid email.' : null,
+                  validator: (val) => val.isEmpty ? 'Enter a valid email' : null,
                   onChanged: (val) {
                     setState(() => email = val);
                   }
@@ -75,7 +75,7 @@ class _RegisterState extends State<Register > {
                 TextFormField(
                   decoration: textInputDecoration.copyWith(hintText: 'Password (> 6  characters)'),
                   controller: _passwordController,
-                  validator: (val) => val.length < 6 ? 'Password must be at least 6 characters.' : null,
+                  validator: (val) => val.length < 6 ? 'Password must be at least 6 characters' : null,
                   obscureText: true,
                   onChanged: (val) {
                     setState(() => password = val);

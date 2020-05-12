@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:grouped_buttons/grouped_buttons.dart';
 // import 'package:makanforfree/models/user.dart';
 
 class FormMaterial extends StatefulWidget {
@@ -25,6 +26,11 @@ class _FormMaterialState extends State<FormMaterial> {
   String _time = "Buffet Expiry";
   bool _halal = false;
   bool _vegetarian = false;
+  bool _permission = false;
+  bool permissionStyle = false;
+
+  List<String> _amounts = <String>['Abundant', 'Reasonable', 'Not much left'];
+  String _currentItemSelected = 'Amount of Food Left';
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +41,7 @@ class _FormMaterialState extends State<FormMaterial> {
         elevation: 0.0,
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0,),
+        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0,),
         child: Builder(
           builder: (context) => Form(
             key: _formKey,
@@ -52,12 +58,32 @@ class _FormMaterialState extends State<FormMaterial> {
                     ),
                     controller: _locationController,
                     maxLines: null,
+                    validator: (val) => val.isEmpty ? 'Enter a valid location.' : null,
                   ),
-                  SizedBox(height: 10.0),
-                  DropdownButton(
-                    hint: Text('Amount of Food Left'),
-                    items: null, 
-                    onChanged: null
+                  SizedBox(height: 20.0),
+                  Container(
+                    decoration: ShapeDecoration(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(width: 1.0, style: BorderStyle.solid),
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                      ),
+                    ),
+                    alignment: Alignment.center,
+                    child: DropdownButton<String>(
+                      hint: Text(_currentItemSelected),
+                      underline: SizedBox(),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          this._currentItemSelected = newValue;
+                        });
+                      },
+                      items: _amounts.map((String dropdownStringItem) {
+                        return DropdownMenuItem<String>(
+                          value: dropdownStringItem,
+                          child: Text(dropdownStringItem),
+                        );
+                      }).toList(), 
+                    ),
                   ),
                   SizedBox(height: 10.0),
                   TextFormField(
@@ -189,6 +215,7 @@ class _FormMaterialState extends State<FormMaterial> {
                     title: const Text(
                       'Halal'
                     ),
+                    controlAffinity: ListTileControlAffinity.leading,
                     value: _halal,
                     onChanged: (bool newValue) {
                       setState(() {
@@ -200,10 +227,30 @@ class _FormMaterialState extends State<FormMaterial> {
                     title: const Text(
                       'Vegetarian'
                     ),
+                    controlAffinity: ListTileControlAffinity.leading,
                     value: _vegetarian,
                     onChanged: (bool newValue) {
                       setState(() {
                         _vegetarian = newValue;
+                      });
+                    },
+                  ),
+                  SizedBox(height: 5.0),
+                  Divider(color: Colors.grey[600]),
+                  SizedBox(height: 5.0),
+                  CheckboxListTile(
+                    title: Text(
+                      "I have obtained the event organiser's permission",
+                      style: permissionStyle
+                        ? TextStyle(color: Colors.green)
+                        : TextStyle(color: Colors.red),
+                    ),
+                    controlAffinity: ListTileControlAffinity.leading,
+                    value: _permission,
+                    onChanged: (bool newValue) {
+                      setState(() {
+                        _permission = newValue;
+                        permissionStyle = !permissionStyle;
                       });
                     },
                   ),

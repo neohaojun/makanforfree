@@ -68,7 +68,7 @@ class _SignInState extends State<SignIn> {
                 TextFormField(
                   decoration: textInputDecoration.copyWith(hintText: 'Email'),
                   controller: _emailController,
-                  validator: (val) => val.isEmpty ? 'Enter a valid email.' : null,
+                  validator: (val) => val.isEmpty ? 'Enter a valid email' : null,
                   onChanged: (val) {
                     setState(() => email = val);
                   }
@@ -77,7 +77,7 @@ class _SignInState extends State<SignIn> {
                 TextFormField(
                   decoration: textInputDecoration.copyWith(hintText: 'Password'),
                   controller: _passwordController,
-                  validator: (val) => val.length < 6 ? 'Password must be at least 6 characters.' : null,
+                  validator: (val) => val.length < 6 ? 'Password must be at least 6 characters' : null,
                   obscureText: true,
                   onChanged: (val) {
                     setState(() => password = val);
@@ -135,10 +135,12 @@ class _SignInState extends State<SignIn> {
                     ),
                     onPressed: () async {
                     bool res = await _auth.signInWithGoogle();
+                    setState(() => loading = true);
                     if(!res)
                       error2 = "Error signing in with google";
                       errorBox3 = 20.0;
                       errorBox4 = 20.0;
+                      setState(() => loading = false);
                     },
                   ),
                 ),
