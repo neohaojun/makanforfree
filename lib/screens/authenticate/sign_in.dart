@@ -44,27 +44,39 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return loading ? Loading() : Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.red,
-        elevation: 0.0,
-        title: Text('MakanForFree'),
-      ),
+      // backgroundColor: Colors.white,
+      // appBar: AppBar(
+      //   backgroundColor: Colors.red,
+      //   elevation: 0.0,
+      //   title: Text('MakanForFree'),
+      // ),
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0,),
+        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0,),
         child: Form(
           key: _formKey,
-          child: SingleChildScrollView(
+          // child: SingleChildScrollView(
             child: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SizedBox(height: 20.0),
-                Text(
-                  'Sign In',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23.0),
-                ),
-                Divider(color: Colors.grey[600]),
+                // SizedBox(height: 20.0),
+                Image.asset('assets/images/logo.png'),
                 SizedBox(height: 10.0),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    'Welcome Back',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35.0, color: Color(0xff224966)),
+                  ),
+                ),
+                SizedBox(height: 3.0),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    'Sign in to Continue',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ),
+                SizedBox(height: 20.0),
                 TextFormField(
                   decoration: textInputDecoration.copyWith(
                     hintText: 'Email', 
@@ -113,15 +125,18 @@ class _SignInState extends State<SignIn> {
                   minWidth: double.infinity,
                   height: 40.0,
                   child: RaisedButton.icon(
-                   color: Colors.white,
+                   color: Color(0xff224966),
                     label: Text(
                       'SIGN IN WITH EMAIL',
-                      style: TextStyle(fontSize: 15, color: Colors.black),
+                      style: TextStyle(fontSize: 15, color: Colors.white),
                     ),
-                    shape: RoundedRectangleBorder(side: BorderSide(color: Colors.grey[600])),
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(color: Colors.grey[600]),
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
                     icon: Icon(
                       Icons.mail_outline,
-                      color: Colors.black
+                      color: Colors.white,
                     ),
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {
@@ -161,7 +176,10 @@ class _SignInState extends State<SignIn> {
                       'CONTINUE WITH GOOGLE',
                       style: TextStyle(fontSize: 15, color: Colors.black),
                     ),
-                    shape: RoundedRectangleBorder(side: BorderSide(color: Colors.grey[600])),
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(color: Colors.grey[600]),
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
                     icon: SvgPicture.asset(
                       "assets/icons/google_search.svg",
                       height: 18.0
@@ -196,7 +214,7 @@ class _SignInState extends State<SignIn> {
             ),
           ),
         ),
-      ),
-    );
+      );
+    // );
   }
 }
