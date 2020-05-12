@@ -43,9 +43,9 @@ class _RegisterState extends State<Register > {
   @override
   Widget build(BuildContext context) {
     return loading ? Loading() : Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.grey[700],
+        backgroundColor: Colors.red,
         elevation: 0.0,
         title: Text('MakanForFree'),
       ),
@@ -64,7 +64,17 @@ class _RegisterState extends State<Register > {
                 Divider(color: Colors.grey[600]),
                 SizedBox(height: 10.0),
                 TextFormField(
-                  decoration: textInputDecoration.copyWith(hintText: 'Email'),
+                  decoration: textInputDecoration.copyWith(
+                    hintText: 'Email', 
+                    prefixIcon: Icon(Icons.mail_outline),
+                    fillColor: Colors.grey[200],
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue, width: 2.0)
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey[600], width: 1.0)
+                    ),
+                  ),
                   controller: _emailController,
                   validator: (val) => val.isEmpty ? 'Enter a valid email' : null,
                   onChanged: (val) {
@@ -73,7 +83,17 @@ class _RegisterState extends State<Register > {
                 ),
                 SizedBox(height: 20.0),
                 TextFormField(
-                  decoration: textInputDecoration.copyWith(hintText: 'Password (> 6  characters)'),
+                  decoration: textInputDecoration.copyWith(
+                    hintText: 'Password (> 6 characters)',
+                    prefixIcon: Icon(Icons.lock_outline),
+                    fillColor: Colors.grey[200],
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue, width: 2.0)
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey[600], width: 1.0)
+                    ),
+                  ),
                   controller: _passwordController,
                   validator: (val) => val.length < 6 ? 'Password must be at least 6 characters' : null,
                   obscureText: true,
@@ -91,7 +111,7 @@ class _RegisterState extends State<Register > {
                   minWidth: double.infinity,
                   height: 40.0,
                   child: RaisedButton.icon(
-                   color: Colors.pink[200],
+                   color: Colors.white,
                     label: Text(
                       'REGISTER WITH EMAIL',
                       style: TextStyle(fontSize: 15, color: Colors.black),
@@ -117,6 +137,19 @@ class _RegisterState extends State<Register > {
                     }
                   ),
                 ),
+                SizedBox(height: 10.0),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Divider(color: Colors.grey[600],)
+                    ),
+                    Text("       OR       "),
+                    Expanded(
+                      child: Divider(color: Colors.grey[600],)
+                    ),
+                  ]
+                ),
+                SizedBox(height: 10.0),
                 ButtonTheme(
                   minWidth: double.infinity,
                   height: 40.0,

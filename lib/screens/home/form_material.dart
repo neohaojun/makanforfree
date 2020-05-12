@@ -36,7 +36,7 @@ class _FormMaterialState extends State<FormMaterial> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home | MakanForFree'),
+        title: Text('Add a Buffet'),
         backgroundColor: Colors.red[400],
         elevation: 0.0,
       ),
@@ -267,9 +267,10 @@ class _FormMaterialState extends State<FormMaterial> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SvgPicture.asset(
-                              "assets/icons/right_arrow.svg",
+                              "assets/icons/tick.svg",
                               height: 20.0,
                             ),
+                            Text('   SUBMIT')
                           ],
                         ),
                       ),

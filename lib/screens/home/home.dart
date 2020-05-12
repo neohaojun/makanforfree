@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:makanforfree/services/auth.dart';
 import 'form_material.dart';
-import 'package:makanforfree/shared/loading.dart';
+// import 'package:makanforfree/shared/loading.dart';
 
 class Home extends StatefulWidget {
 
