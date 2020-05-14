@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,6 +11,7 @@ class FormMaterial extends StatefulWidget {
 }
 
 class _FormMaterialState extends State<FormMaterial> {
+  TextEditingController _titleController;
   TextEditingController _locationController;
   TextEditingController _choicesController;
 
@@ -21,9 +23,10 @@ class _FormMaterialState extends State<FormMaterial> {
   }
 
   // final _user = User();
+  final firestoreInstance = Firestore.instance;
   final _formKey = GlobalKey<FormState>();
   String _date = "Buffet Expiry Date";
-  String _time = "Buffet Expiry";
+  String _time = "Buffet Expiry Time";
   bool _halal = false;
   bool _vegetarian = false;
   bool _permission = false;
@@ -37,11 +40,11 @@ class _FormMaterialState extends State<FormMaterial> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Add a Buffet'),
-        backgroundColor: Colors.red[400],
+        backgroundColor: Color(0xff224966),
         elevation: 0.0,
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0,),
+        padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0,),
         child: Builder(
           builder: (context) => Form(
             key: _formKey,
@@ -52,13 +55,24 @@ class _FormMaterialState extends State<FormMaterial> {
                   TextFormField(
                     decoration: InputDecoration(
                       icon: Icon(
+                        Icons.title
+                      ),
+                      labelText: "Buffet Name",
+                    ),
+                    controller: _titleController,
+                    maxLines: null,
+                    validator: (val) => val.isEmpty ? 'This field cannot be empty' : null,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      icon: Icon(
                         Icons.pin_drop,
                       ),
                       labelText: "Location (e.g. OTH, KKH)",
                     ),
                     controller: _locationController,
                     maxLines: null,
-                    validator: (val) => val.isEmpty ? 'Enter a valid location.' : null,
+                    validator: (val) => val.isEmpty ? 'This field cannot be empty' : null,
                   ),
                   SizedBox(height: 20.0),
                   Container(
@@ -95,6 +109,7 @@ class _FormMaterialState extends State<FormMaterial> {
                     ),
                     controller: _choicesController,
                     maxLines: null,
+                    validator: (val) => val.isEmpty ? 'This field cannot be empty' : null,
                   ),
                   SizedBox(height: 20.0),
                   FlatButton(
@@ -235,9 +250,9 @@ class _FormMaterialState extends State<FormMaterial> {
                       });
                     },
                   ),
-                  SizedBox(height: 5.0),
+                  // SizedBox(height: 1.0),
                   Divider(color: Colors.grey[600]),
-                  SizedBox(height: 5.0),
+                  // SizedBox(height: 1.0),
                   CheckboxListTile(
                     title: Text(
                       "I have obtained the event organiser's permission",
@@ -254,7 +269,7 @@ class _FormMaterialState extends State<FormMaterial> {
                       });
                     },
                   ),
-                  SizedBox(height: 20.0),
+                  SizedBox(height: 15.0),
                   ButtonTheme(
                     minWidth: double.infinity,
                     height: 40.0,
@@ -262,7 +277,18 @@ class _FormMaterialState extends State<FormMaterial> {
                       alignment: Alignment.bottomCenter,
                       child: FlatButton(
                         color: Colors.blue.withOpacity(.26),
-                        onPressed: () {},
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                        ),
+                        onPressed: () {
+                          firestoreInstance.collection("buffets").add({
+                            "title" : _titleController.text,
+                            "location": _locationController.text,
+                            "choices": _choicesController.text,
+                          }).then((value){
+                            print(value.documentID);
+                          });
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

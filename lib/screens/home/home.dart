@@ -17,23 +17,62 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Home | MakanForFree'),
-        backgroundColor: Colors.red[400],
-        elevation: 0.0,
+        title: Row(
+          children: [
+            Image.asset(
+              'assets/images/logo.png',
+              fit: BoxFit.contain,
+              height: 33.0,
+            ),
+            Container(
+              padding: const EdgeInsets.all(8.0), 
+              child: Text(
+                'MakanForFree',
+                style: TextStyle(color: Color(0xff224966)),
+              )
+            )
+          ],
+        ),
+        backgroundColor: Colors.white,
+        elevation: 2.0,
         actions: <Widget>[
           FlatButton(
             child: Icon(
               Icons.exit_to_app,
-              color: Colors.white,
+              color: Color(0xff224966),
             ),
             onPressed: () async {
               await _auth.signOut();
-              setState(() => loading = true);
             },
           )
         ],
+      ),
+      body: Container(
+        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0,),
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: 50.0,),
+              Row(
+                children: <Widget>[
+                  // Align(
+                  //       alignment: Alignment.topLeft,
+                  //       child: Image.asset(
+                  //         'assets/images/logo.png',
+                  //         height: 40.0,
+                  //       ),
+                  //     ),
+                  // Text(
+                  //   '   Home | Makan For Free',
+                  //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0, color: Color(0xff224966)),
+                  // ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
       floatingActionButton: Container(
         padding: EdgeInsets.all(10),
