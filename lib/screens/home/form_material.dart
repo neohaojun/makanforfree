@@ -18,6 +18,7 @@ class _FormMaterialState extends State<FormMaterial> {
   @override
   void initState() { 
     super.initState();
+    _titleController = TextEditingController(text: "");
     _locationController = TextEditingController(text: "");
     _choicesController = TextEditingController(text: "");
   }
@@ -27,6 +28,8 @@ class _FormMaterialState extends State<FormMaterial> {
   final _formKey = GlobalKey<FormState>();
   String _date = "Buffet Expiry Date";
   String _time = "Buffet Expiry Time";
+  int _dateInt = 0;
+  int _timeInt = 0;
   bool _halal = false;
   bool _vegetarian = false;
   bool _permission = false;
@@ -125,7 +128,8 @@ class _FormMaterialState extends State<FormMaterial> {
                         minTime: DateTime(2000, 1, 1),
                         maxTime: DateTime(2022, 12, 31), onConfirm: (date) {
                       print('confirm $date');
-                      _date = '${date.year} - ${date.month} - ${date.day}';
+                      _date = '${date.month}-${date.day}-${date.year}';
+                      _dateInt = int.parse(_date);
                       setState(() {});
                     }, currentTime: DateTime.now(), locale: LocaleType.en);
                   },
@@ -180,7 +184,8 @@ class _FormMaterialState extends State<FormMaterial> {
                         ),
                         showTitleActions: true, onConfirm: (time) {
                       print('confirm $time');
-                      _time = '${time.hour} : ${time.minute} : ${time.second}';
+                      _time = '${time.hour}:${time.minute}:${time.second}';
+                      _timeInt = int.parse(_time);
                       setState(() {});
                     }, currentTime: DateTime.now(), locale: LocaleType.en);
                     setState(() {});
@@ -284,7 +289,12 @@ class _FormMaterialState extends State<FormMaterial> {
                           firestoreInstance.collection("buffets").add({
                             "title" : _titleController.text,
                             "location": _locationController.text,
-                            "choices": _choicesController.text,
+                            "amount": _currentItemSelected,
+                            "choices": _choicesController.text.replaceAll('\n', r'\n'),
+                            "halal": _halal,
+                            "vegetarian": _vegetarian,
+                            "expiry": DateTime.parse("$_date $_time"),
+                            "expiry2": DateTime(_dateInt, _timeInt),
                           }).then((value){
                             print(value.documentID);
                           });
