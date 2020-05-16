@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 // import 'package:grouped_buttons/grouped_buttons.dart';
 // import 'package:makanforfree/models/user.dart';
 
@@ -11,9 +12,6 @@ class FormMaterial extends StatefulWidget {
 }
 
 class _FormMaterialState extends State<FormMaterial> {
-  TextEditingController _titleController;
-  TextEditingController _locationController;
-  TextEditingController _choicesController;
 
   @override
   void initState() { 
@@ -23,13 +21,22 @@ class _FormMaterialState extends State<FormMaterial> {
     _choicesController = TextEditingController(text: "");
   }
 
+  TextEditingController _titleController;
+  TextEditingController _locationController;
+  TextEditingController _choicesController;
+
   // final _user = User();
   final firestoreInstance = Firestore.instance;
   final _formKey = GlobalKey<FormState>();
   String _date = "Buffet Expiry Date";
   String _time = "Buffet Expiry Time";
-  int _dateInt = 0;
-  int _timeInt = 0;
+  var _day = 0;
+  var _month = 0;
+  var _year = 0;
+  var _hour = 0;
+  var _minute = 0;
+  var _second = 0;
+  var _expiryDate;
   bool _halal = false;
   bool _vegetarian = false;
   bool _permission = false;
@@ -128,8 +135,10 @@ class _FormMaterialState extends State<FormMaterial> {
                         minTime: DateTime(2000, 1, 1),
                         maxTime: DateTime(2022, 12, 31), onConfirm: (date) {
                       print('confirm $date');
-                      _date = '${date.month}-${date.day}-${date.year}';
-                      _dateInt = int.parse(_date);
+                      _date = '${date.day} - ${date.month} - ${date.year}';
+                      _day = date.day;
+                      _month = date.month;
+                      _year = date.year;
                       setState(() {});
                     }, currentTime: DateTime.now(), locale: LocaleType.en);
                   },
@@ -151,10 +160,12 @@ class _FormMaterialState extends State<FormMaterial> {
                                   ),
                                   Text(
                                     "   $_date",
-                                    style: TextStyle(
+                                    style: GoogleFonts.poppins(
+                                      textStyle: TextStyle(
                                         color: Colors.white,
-                                        // fontWeight: FontWeight.bold,
-                                        fontSize: 18.0),
+                                        fontSize: 18.0
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -165,7 +176,6 @@ class _FormMaterialState extends State<FormMaterial> {
                           "  Change",
                           style: TextStyle(
                               color: Colors.white,
-                              // fontWeight: FontWeight.bold,
                               fontSize: 18.0),
                         ),
                       ],
@@ -184,8 +194,11 @@ class _FormMaterialState extends State<FormMaterial> {
                         ),
                         showTitleActions: true, onConfirm: (time) {
                       print('confirm $time');
-                      _time = '${time.hour}:${time.minute}:${time.second}';
-                      _timeInt = int.parse(_time);
+                      _time = '${time.hour} : ${time.minute} : ${time.second}';
+                      _hour = time.hour;
+                      _minute = time.minute;
+                      _second = time.second;
+                      _expiryDate = DateTime(_year, _month, _day, _hour, _minute, _second);
                       setState(() {});
                     }, currentTime: DateTime.now(), locale: LocaleType.en);
                     setState(() {});
@@ -208,10 +221,12 @@ class _FormMaterialState extends State<FormMaterial> {
                                   ),
                                   Text(
                                     "   $_time",
-                                    style: TextStyle(
+                                    style: GoogleFonts.poppins(
+                                      textStyle: TextStyle(
                                         color: Colors.white,
-                                        // fontWeight: FontWeight.bold,
-                                        fontSize: 18.0),
+                                        fontSize: 18.0
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -222,7 +237,6 @@ class _FormMaterialState extends State<FormMaterial> {
                           "  Change",
                           style: TextStyle(
                               color: Colors.white,
-                              // fontWeight: FontWeight.bold,
                               fontSize: 18.0),
                         ),
                       ],
@@ -293,8 +307,7 @@ class _FormMaterialState extends State<FormMaterial> {
                             "choices": _choicesController.text.replaceAll('\n', r'\n'),
                             "halal": _halal,
                             "vegetarian": _vegetarian,
-                            "expiry": DateTime.parse("$_date $_time"),
-                            "expiry2": DateTime(_dateInt, _timeInt),
+                            "expiry": _expiryDate,
                           }).then((value){
                             print(value.documentID);
                           });
