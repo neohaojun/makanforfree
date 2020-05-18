@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:makanforfree/services/auth.dart';
 import 'form_material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:makanforfree/shared/loading.dart';
 
 class Home extends StatefulWidget {
@@ -13,6 +14,33 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
   bool loading = false;
+  DateTime now =  DateTime.now();
+  DateTime expiry = DateTime.now();
+  var circleColour = Colors.green;
+
+  List<Widget> makeListWidgetRed(AsyncSnapshot snapshot) {
+    return snapshot.data.documents.map<Widget>((document) {
+      // now =  DateTime.now();
+      // expiry = DateTime(document["expiry"]);
+      // if (now.isAfter(expiry)) {
+      //   circleColour = Colors.blue;
+      // } else if (now.isBefore(expiry)) {
+      //   circleColour = Colors.red;
+      // } else {
+      //   circleColour= Colors.green;
+      // }
+      return ListTile(
+        leading: CircleAvatar(
+          backgroundColor: circleColour,
+        ),
+        title: Text(document["title"]),
+        subtitle: Text(document["location"]),
+        // isThreeLine: true,
+        trailing: Icon(Icons.arrow_forward),
+        onTap: () {},
+      );
+    }).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,29 +78,22 @@ class _HomeState extends State<Home> {
         ],
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0,),
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              SizedBox(height: 50.0,),
-              Row(
-                children: <Widget>[
-                  // Align(
-                  //       alignment: Alignment.topLeft,
-                  //       child: Image.asset(
-                  //         'assets/images/logo.png',
-                  //         height: 40.0,
-                  //       ),
-                  //     ),
-                  // Text(
-                  //   '   Home | Makan For Free',
-                  //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0, color: Color(0xff224966)),
-                  // ),
-                ],
+        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0,),
+        // child: SingleChildScrollView(
+          // child: Column(
+            // children: <Widget>[
+              // SizedBox(height: 50.0,),
+              child: StreamBuilder(
+                stream: Firestore.instance.collection('buffets').snapshots(),
+                builder: (context, snapshot) {
+                  return ListView(
+                    children: makeListWidgetRed(snapshot),
+                  );
+                }
               ),
-            ],
-          ),
-        ),
+            // ],
+          // ),
+        // ),
       ),
       floatingActionButton: Container(
         padding: EdgeInsets.all(10),

@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:grouped_buttons/grouped_buttons.dart';
-// import 'package:makanforfree/models/user.dart';
 
 class FormMaterial extends StatefulWidget {
   @override
@@ -67,7 +65,7 @@ class _FormMaterialState extends State<FormMaterial> {
                       icon: Icon(
                         Icons.title
                       ),
-                      labelText: "Buffet Name",
+                      labelText: "Buffet Name (e.g. SLC Day 1 Lunch)",
                     ),
                     controller: _titleController,
                     maxLines: null,
