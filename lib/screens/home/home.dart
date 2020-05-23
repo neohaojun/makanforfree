@@ -17,26 +17,32 @@ class _HomeState extends State<Home> {
   DateTime now =  DateTime.now();
   DateTime expiry = DateTime.now();
   var circleColour = Colors.green;
+  List buffets = [];
 
-  List<Widget> makeListWidgetRed(AsyncSnapshot snapshot) {
+  List<Widget> makeListWidget(AsyncSnapshot snapshot) {
     return snapshot.data.documents.map<Widget>((document) {
-      // now =  DateTime.now();
-      // expiry = DateTime(document["expiry"]);
-      // if (now.isAfter(expiry)) {
-      //   circleColour = Colors.blue;
-      // } else if (now.isBefore(expiry)) {
-      //   circleColour = Colors.red;
-      // } else {
-      //   circleColour= Colors.green;
-      // }
+      now =  DateTime.now();
+      expiry = document["expiry"].toDate();
+      if (now.isAfter(expiry)) {
+        circleColour = Colors.red;
+      } else if (now.isAtSameMomentAs(expiry)) {
+        circleColour = Colors.green;
+      } else if (now.isBefore(expiry)) {
+        circleColour= Colors.blue;
+      }
+      
+      buffets = [
+        {expiry: document["expiry"].toDate()}
+      ];
+      buffets.sort((a,b) => a.compareTo(b));
+
       return ListTile(
         leading: CircleAvatar(
           backgroundColor: circleColour,
         ),
         title: Text(document["title"]),
         subtitle: Text(document["location"]),
-        // isThreeLine: true,
-        trailing: Icon(Icons.arrow_forward),
+        trailing: Icon(Icons.keyboard_arrow_right),
         onTap: () {},
       );
     }).toList();
@@ -87,7 +93,9 @@ class _HomeState extends State<Home> {
                 stream: Firestore.instance.collection('buffets').snapshots(),
                 builder: (context, snapshot) {
                   return ListView(
-                    children: makeListWidgetRed(snapshot),
+                    // children: ListTile.divideTiles(
+                      children: makeListWidget(snapshot),
+                    // )
                   );
                 }
               ),

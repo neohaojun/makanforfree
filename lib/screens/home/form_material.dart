@@ -196,7 +196,6 @@ class _FormMaterialState extends State<FormMaterial> {
                       _hour = time.hour;
                       _minute = time.minute;
                       _second = time.second;
-                      _expiryDate = DateTime(_year, _month, _day, _hour, _minute, _second);
                       setState(() {});
                     }, currentTime: DateTime.now(), locale: LocaleType.en);
                     setState(() {});
@@ -298,6 +297,7 @@ class _FormMaterialState extends State<FormMaterial> {
                           borderRadius: BorderRadius.circular(25.0),
                         ),
                         onPressed: () {
+                          _expiryDate = DateTime(_year, _month, _day, _hour, _minute, _second);
                           firestoreInstance.collection("buffets").add({
                             "title" : _titleController.text,
                             "location": _locationController.text,
