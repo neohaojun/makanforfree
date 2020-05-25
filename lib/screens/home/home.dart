@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:makanforfree/services/auth.dart';
-import 'form_material.dart';
+import 'form.dart';
+import 'details.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:makanforfree/shared/loading.dart';
 
@@ -16,13 +18,14 @@ class _HomeState extends State<Home> {
   bool loading = false;
   DateTime now =  DateTime.now();
   DateTime expiry = DateTime.now();
+  String expiryString = '';
   var circleColour = Colors.green;
-  List buffets = [];
 
   List<Widget> makeListWidget(AsyncSnapshot snapshot) {
     return snapshot.data.documents.map<Widget>((document) {
       now =  DateTime.now();
       expiry = document["expiry"].toDate();
+      expiryString = DateFormat('dd-MM-yyyy kk:mm:ss').format(expiry);
       if (now.isAfter(expiry)) {
         circleColour = Colors.red;
       } else if (now.isAtSameMomentAs(expiry)) {
@@ -30,20 +33,23 @@ class _HomeState extends State<Home> {
       } else if (now.isBefore(expiry)) {
         circleColour= Colors.blue;
       }
-      
-      // buffets = [
-      //   {expiry: document["expiry"].toDate()}
-      // ];
-      // buffets.sort((a,b) => a.compareTo(b));
 
       return ListTile(
         leading: CircleAvatar(
           backgroundColor: circleColour,
         ),
         title: Text(document["title"]),
-        subtitle: Text(document["location"]),
+        subtitle: Text('Expiry: $expiryString'),
         trailing: Icon(Icons.keyboard_arrow_right),
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DetailsPage()
+            )
+          );
+        },
+        // onTap: () => navigateToDetailsPage(snapshot.data[index]),
       );
     }).toList();
   }
@@ -51,15 +57,14 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.white,
       appBar: AppBar(
         title: Row(
           children: [
-            Image.asset(
-              'assets/images/logo.png',
-              fit: BoxFit.contain,
-              height: 33.0,
-            ),
+            // Image.asset(
+            //   'assets/images/logo.png',
+            //   fit: BoxFit.contain,
+            //   height: 33.0,
+            // ),
             Container(
               padding: const EdgeInsets.all(8.0), 
               child: Text(
@@ -90,12 +95,10 @@ class _HomeState extends State<Home> {
             // children: <Widget>[
               // SizedBox(height: 50.0,),
               child: StreamBuilder(
-                stream: Firestore.instance.collection('buffets').snapshots(),
+                stream: Firestore.instance.collection('buffets').orderBy('expiry', descending: true).snapshots(),
                 builder: (context, snapshot) {
                   return ListView(
-                    // children: ListTile.divideTiles(
-                      children: makeListWidget(snapshot),
-                    // )
+                    children: makeListWidget(snapshot),
                   );
                 }
               ),
@@ -114,7 +117,7 @@ class _HomeState extends State<Home> {
         child: FloatingActionButton(
           onPressed: () {
             Navigator.push(context,
-              // MaterialPageRoute(builder: (context) => FormMaterial())
+              // MaterialPageRoute(builder: (context) => BuffetForm())
               PageRouteBuilder(
                 transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secAnimation, Widget child) {
                   
@@ -127,7 +130,7 @@ class _HomeState extends State<Home> {
                   );
                 },
                 pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secAnimation) {
-                  return FormMaterial();
+                  return BuffetForm();
                 }
               )
             );

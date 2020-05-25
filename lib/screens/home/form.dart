@@ -4,12 +4,12 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class FormMaterial extends StatefulWidget {
+class BuffetForm extends StatefulWidget {
   @override
-  _FormMaterialState createState() => _FormMaterialState();
+  _BuffetFormState createState() => _BuffetFormState();
 }
 
-class _FormMaterialState extends State<FormMaterial> {
+class _BuffetFormState extends State<BuffetForm> {
 
   @override
   void initState() { 
@@ -48,7 +48,7 @@ class _FormMaterialState extends State<FormMaterial> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Add a Buffet'),
-        backgroundColor: Color(0xff224966),
+        backgroundColor: Colors.blueGrey,
         elevation: 0.0,
       ),
       body: Container(
@@ -298,17 +298,19 @@ class _FormMaterialState extends State<FormMaterial> {
                         ),
                         onPressed: () {
                           _expiryDate = DateTime(_year, _month, _day, _hour, _minute, _second);
-                          firestoreInstance.collection("buffets").add({
-                            "title" : _titleController.text,
-                            "location": _locationController.text,
-                            "amount": _currentItemSelected,
-                            "choices": _choicesController.text.replaceAll('\n', r'\n'),
-                            "halal": _halal,
-                            "vegetarian": _vegetarian,
-                            "expiry": _expiryDate,
-                          }).then((value){
-                            print(value.documentID);
-                          });
+                          firestoreInstance
+                            .collection("buffets")
+                            .add({
+                              "title" : _titleController.text,
+                              "location": _locationController.text,
+                              "amount": _currentItemSelected,
+                              "choices": _choicesController.text.replaceAll('\n', r'\n'),
+                              "halal": _halal,
+                              "vegetarian": _vegetarian,
+                              "expiry": _expiryDate,
+                            }).then((value){
+                              print(value.documentID);
+                            });
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
