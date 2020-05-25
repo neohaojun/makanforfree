@@ -116,7 +116,6 @@ class _HomeState extends State<Home> {
             Navigator.push(context,
               // MaterialPageRoute(builder: (context) => FormMaterial())
               PageRouteBuilder(
-                // transitionDuration: Duration(seconds: 1),
                 transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secAnimation, Widget child) {
                   
                   animation = CurvedAnimation(parent: animation, curve: Curves.linear);
