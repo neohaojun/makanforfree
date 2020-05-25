@@ -31,10 +31,10 @@ class _HomeState extends State<Home> {
         circleColour= Colors.blue;
       }
       
-      buffets = [
-        {expiry: document["expiry"].toDate()}
-      ];
-      buffets.sort((a,b) => a.compareTo(b));
+      // buffets = [
+      //   {expiry: document["expiry"].toDate()}
+      // ];
+      // buffets.sort((a,b) => a.compareTo(b));
 
       return ListTile(
         leading: CircleAvatar(
