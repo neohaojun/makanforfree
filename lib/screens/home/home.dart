@@ -21,37 +21,14 @@ class _HomeState extends State<Home> {
   String expiryString = '';
   var circleColour = Colors.green;
 
-  List<Widget> makeListWidget(AsyncSnapshot snapshot) {
-    return snapshot.data.documents.map<Widget>((document) {
-      now =  DateTime.now();
-      expiry = document["expiry"].toDate();
-      expiryString = DateFormat('dd-MM-yyyy kk:mm:ss').format(expiry);
-      if (now.isAfter(expiry)) {
-        circleColour = Colors.red;
-      } else if (now.isAtSameMomentAs(expiry)) {
-        circleColour = Colors.green;
-      } else if (now.isBefore(expiry)) {
-        circleColour= Colors.blue;
-      }
+  Future getBuffets() async {
+    var firestore = Firestore.instance;
+    QuerySnapshot qn = await firestore.collection("buffets").orderBy("expiry", descending: true).getDocuments();
+    return qn.documents;
+  }
 
-      return ListTile(
-        leading: CircleAvatar(
-          backgroundColor: circleColour,
-        ),
-        title: Text(document["title"]),
-        subtitle: Text('Expiry: $expiryString'),
-        trailing: Icon(Icons.keyboard_arrow_right),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => DetailsPage()
-            )
-          );
-        },
-        // onTap: () => navigateToDetailsPage(snapshot.data[index]),
-      );
-    }).toList();
+  navigateToDetail(DocumentSnapshot buffet) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsPage(buffet: buffet,)));
   }
 
   @override
@@ -90,21 +67,41 @@ class _HomeState extends State<Home> {
       ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0,),
-        // child: SingleChildScrollView(
-          // child: Column(
-            // children: <Widget>[
-              // SizedBox(height: 50.0,),
-              child: StreamBuilder(
-                stream: Firestore.instance.collection('buffets').orderBy('expiry', descending: true).snapshots(),
-                builder: (context, snapshot) {
-                  return ListView(
-                    children: makeListWidget(snapshot),
+        child: FutureBuilder(
+          future: getBuffets(),
+          builder: (_, snapshot) {
+
+            if(snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: Text('Loading...'),
+              );
+            } else {
+              return ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (_, index) {
+                  now =  DateTime.now();
+                  expiry = snapshot.data[index].data["expiry"].toDate();
+                  expiryString = DateFormat("dd-MM-yyyy kk:mm:ss").format(expiry);
+                  if (now.isAfter(expiry)) {
+                    circleColour = Colors.red;
+                  } else if (now.isAtSameMomentAs(expiry)) {
+                    circleColour = Colors.green;
+                  } else if (now.isBefore(expiry)) {
+                    circleColour= Colors.blue;
+                  }
+
+                  return ListTile(
+                    leading: CircleAvatar(backgroundColor: circleColour),
+                    title: Text(snapshot.data[index].data["title"]),
+                    subtitle: Text("Expiry: $expiryString"),
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                    onTap: () => navigateToDetail(snapshot.data[index]),
                   );
                 }
-              ),
-            // ],
-          // ),
-        // ),
+              );
+            }
+
+        }),
       ),
       floatingActionButton: Container(
         padding: EdgeInsets.all(10),

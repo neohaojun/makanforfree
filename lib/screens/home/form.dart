@@ -48,7 +48,7 @@ class _BuffetFormState extends State<BuffetForm> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Add a Buffet'),
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: Colors.blueGrey[600],
         elevation: 0.0,
       ),
       body: Container(
@@ -111,7 +111,7 @@ class _BuffetFormState extends State<BuffetForm> {
                   TextFormField(
                     decoration: InputDecoration(
                       icon: Icon(
-                        Icons.fastfood,
+                        Icons.list,
                       ),
                       labelText: "Food Choices Available",
                     ),
