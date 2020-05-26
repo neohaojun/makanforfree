@@ -23,18 +23,20 @@ class _DetailsPageState extends State<DetailsPage> {
         title: Row(
           children: [
             Container(
-              child: Text(
-                'Buffet Details',
-                // widget.buffet.data["title"],
-                style: TextStyle(color: Colors.white),
-              )
-            )
+                child: Text(
+              'Buffet Details',
+              // widget.buffet.data["title"],
+              style: TextStyle(color: Colors.white),
+            ))
           ],
         ),
         backgroundColor: Color(0xff224966),
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 30.0,),
+        padding: EdgeInsets.symmetric(
+          vertical: 30.0,
+          horizontal: 30.0,
+        ),
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
@@ -46,7 +48,9 @@ class _DetailsPageState extends State<DetailsPage> {
                 ),
               ),
               SizedBox(height: 5.0),
-              Divider(color: Colors.grey[800],),
+              Divider(
+                color: Colors.grey[800],
+              ),
               SizedBox(height: 7.0),
               Row(
                 children: <Widget>[
@@ -90,7 +94,9 @@ class _DetailsPageState extends State<DetailsPage> {
                 ],
               ),
               SizedBox(height: 7.0),
-              Divider(color: Colors.grey[800],),
+              Divider(
+                color: Colors.grey[800],
+              ),
               SizedBox(height: 7.0),
               Row(
                 children: <Widget>[
@@ -100,7 +106,9 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                   SizedBox(width: 15.0),
                   Text(
-                    DateFormat("dd - MM - yyyy").format(widget.buffet.data["expiry"].toDate()).toString(),
+                    DateFormat("dd - MM - yyyy")
+                        .format(widget.buffet.data["expiry"].toDate())
+                        .toString(),
                     style: TextStyle(fontSize: 15),
                   )
                 ],
@@ -114,13 +122,17 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                   SizedBox(width: 15.0),
                   Text(
-                    DateFormat("kk : mm : ss").format(widget.buffet.data["expiry"].toDate()).toString(),
+                    DateFormat("kk : mm : ss")
+                        .format(widget.buffet.data["expiry"].toDate())
+                        .toString(),
                     style: TextStyle(fontSize: 15),
                   )
                 ],
               ),
               SizedBox(height: 7.0),
-              Divider(color: Colors.grey[800],),
+              Divider(
+                color: Colors.grey[800],
+              ),
               SizedBox(height: 7.0),
             ],
           ),
