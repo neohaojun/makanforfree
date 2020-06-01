@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'home.dart';
+// import 'home.dart';
 
 class DetailsPage extends StatefulWidget {
   final DocumentSnapshot buffet;
   DetailsPage({this.buffet});
-
-  bool halalState = false;
-  bool vegetarianState = false;
-  DateTime expiry = DateTime.now();
 
   @override
   _DetailsPageState createState() => _DetailsPageState();

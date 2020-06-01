@@ -229,8 +229,9 @@ class _BuffetFormState extends State<BuffetForm> {
                                           "   $_time",
                                           style: GoogleFonts.poppins(
                                             textStyle: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18.0),
+                                              color: Colors.white,
+                                              fontSize: 18.0,
+                                            ),
                                           ),
                                         ),
                                       ],
