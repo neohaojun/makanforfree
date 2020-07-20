@@ -16,6 +16,7 @@ class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
   bool loading = false;
   DateTime now = DateTime.now();
+  DateTime startValidTime = DateTime.now();
   DateTime expiry = DateTime.now();
   String expiryString = '';
   var circleColour = Colors.green;
@@ -91,9 +92,11 @@ class _HomeState extends State<Home> {
                       expiry = snapshot.data[index].data["expiry"].toDate();
                       expiryString =
                           DateFormat("dd-MM-yyyy kk:mm:ss").format(expiry);
+                      startValidTime = expiry.add(new Duration(hours: -2));
                       if (now.isAfter(expiry)) {
                         circleColour = Colors.red;
-                      } else if (now.isAtSameMomentAs(expiry)) {
+                      } else if (now.isBefore(expiry) &&
+                          now.isAfter(startValidTime)) {
                         circleColour = Colors.green;
                       } else if (now.isBefore(expiry)) {
                         circleColour = Colors.blue;

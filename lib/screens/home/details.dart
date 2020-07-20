@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 // import 'home.dart';
 
@@ -12,9 +13,25 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<DetailsPage> {
+  bool halal = false;
+  bool vegetarian = false;
+  String halalString = "NO";
+  String vegetarianString = "NO";
+  var halalColour = Colors.red;
+  var vegetarianColour = Colors.red;
+
   @override
   Widget build(BuildContext context) {
+    if (widget.buffet.data["halal"] == true) {
+      halalString = "YES";
+      halalColour = Colors.green;
+    }
+    if (widget.buffet.data["vegetarian"] == true) {
+      vegetarianString = "YES";
+      vegetarianColour = Colors.green;
+    }
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Row(
           children: [
@@ -130,6 +147,33 @@ class _DetailsPageState extends State<DetailsPage> {
                 color: Colors.grey[800],
               ),
               SizedBox(height: 7.0),
+              Row(
+                children: <Widget>[
+                  SvgPicture.asset(
+                    "assets/icons/halal.svg",
+                    height: 25.0,
+                  ),
+                  SizedBox(width: 15.0),
+                  Text(
+                    "Halal: " + halalString,
+                    style: TextStyle(color: halalColour),
+                  )
+                ],
+              ),
+              SizedBox(height: 15.0),
+              Row(
+                children: <Widget>[
+                  SvgPicture.asset(
+                    "assets/icons/vegetarian.svg",
+                    height: 25.0,
+                  ),
+                  SizedBox(width: 15.0),
+                  Text(
+                    "Vegetarian: " + vegetarianString,
+                    style: TextStyle(color: vegetarianColour),
+                  )
+                ],
+              ),
             ],
           ),
         ),
