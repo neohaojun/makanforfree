@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'home.dart';
 
 class BuffetForm extends StatefulWidget {
@@ -310,7 +309,6 @@ class _BuffetFormState extends State<BuffetForm> {
                                 "location": _locationController.text,
                                 "amount": _currentItemSelected,
                                 "choices": _choicesController.text,
-                                // .replaceAll('\n', r'\n'),
                                 "halal": _halal,
                                 "vegetarian": _vegetarian,
                                 "expiry": _expiryDate,

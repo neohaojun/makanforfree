@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-// import 'home.dart';
+import 'home.dart';
 
 class DetailsPage extends StatefulWidget {
   final DocumentSnapshot buffet;
@@ -38,11 +38,26 @@ class _DetailsPageState extends State<DetailsPage> {
             Container(
                 child: Text(
               'Buffet Details',
-              // widget.buffet.data["title"],
               style: TextStyle(color: Colors.white),
             ))
           ],
         ),
+        actions: <Widget>[
+          RawMaterialButton(
+            constraints: BoxConstraints(),
+            child: Icon(
+              Icons.edit,
+              color: Colors.white,
+            ),
+            // onTap: () => navigateToDetail(snapshot.data[index]),
+            onPressed: () async {},
+          ),
+          RawMaterialButton(
+            constraints: BoxConstraints(),
+            child: Icon(Icons.delete, color: Colors.white),
+            onPressed: () async {},
+          ),
+        ],
         backgroundColor: Color(0xff224966),
       ),
       body: Container(

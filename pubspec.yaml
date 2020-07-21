@@ -29,7 +29,8 @@ dependencies:
   apple_sign_in: ^0.1.0
   cloud_firestore: ^0.13.5
   device_info: ^0.4.2+3
-  
+  firebase_messaging: ^6.0.16
+
   rxdart: ^0.24.0
   google_fonts: ^1.1.0
 
@@ -43,8 +44,6 @@ dependencies:
   flutter_spinkit: ^4.1.2+1
   flutter_svg: ^0.17.4
   flutter_launcher_icons: ^0.7.5
-  
-  
 
 dev_dependencies:
   flutter_test:
@@ -57,14 +56,11 @@ flutter_icons:
   image_path_ios: "assets/images/makanforfree_icon.png"
   image_path_android: "assets/images/makanforfree_icon.png"
 
-
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -72,8 +68,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-  - assets/icons/
-  - assets/images/
+    - assets/icons/
+    - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -86,8 +82,8 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   fonts:
-    - family:  AppIcons
+    - family: AppIcons
       fonts:
-      - asset: assets/fonts/AppIcons.ttf
+        - asset: assets/fonts/AppIcons.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
