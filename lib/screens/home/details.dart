@@ -1,3 +1,5 @@
+// import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,8 +19,56 @@ class _DetailsPageState extends State<DetailsPage> {
   bool vegetarian = false;
   String halalString = "NO";
   String vegetarianString = "NO";
+  String documentId = "";
   var halalColour = Colors.red;
   var vegetarianColour = Colors.red;
+
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = RawMaterialButton(
+      constraints: BoxConstraints(),
+      child: Text("NO"),
+      textStyle: TextStyle(color: Colors.blue),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = RawMaterialButton(
+      constraints: BoxConstraints(),
+      child: Text("YES"),
+      textStyle: TextStyle(color: Colors.blue),
+      onPressed: () {
+        try {
+          Firestore.instance
+              .collection('buffets')
+              .document(documentId)
+              .delete();
+        } catch (e) {
+          print(e.toString());
+        }
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Home()));
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Delete this buffet?"),
+      // content: Text("Delete this buffet?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +80,7 @@ class _DetailsPageState extends State<DetailsPage> {
       vegetarianString = "YES";
       vegetarianColour = Colors.green;
     }
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -53,10 +104,12 @@ class _DetailsPageState extends State<DetailsPage> {
             onPressed: () async {},
           ),
           RawMaterialButton(
-            constraints: BoxConstraints(),
-            child: Icon(Icons.delete, color: Colors.white),
-            onPressed: () async {},
-          ),
+              constraints: BoxConstraints(),
+              child: Icon(Icons.delete, color: Colors.white),
+              onPressed: () async {
+                documentId = widget.buffet.documentID;
+                showAlertDialog(context);
+              }),
         ],
         backgroundColor: Color(0xff224966),
       ),
