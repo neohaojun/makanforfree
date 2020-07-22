@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'home.dart';
-import 'edit.dart';
+// import 'edit.dart';
 
 class DetailsPage extends StatefulWidget {
   final DocumentSnapshot buffet;
@@ -53,7 +53,7 @@ class _DetailsPageState extends State<DetailsPage> {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Delete this buffet?"),
+      title: Text("Delete " + widget.buffet.data["title"] + "?"),
       // content: Text("Delete this buffet?"),
       actions: [
         cancelButton,
