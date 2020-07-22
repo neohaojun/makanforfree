@@ -27,7 +27,7 @@ class _DetailsPageState extends State<DetailsPage> {
     // set up the buttons
     Widget cancelButton = RawMaterialButton(
       constraints: BoxConstraints(),
-      child: Text("NO"),
+      child: Text("CANCEL"),
       textStyle: TextStyle(color: Colors.blue),
       onPressed: () {
         Navigator.of(context).pop();
@@ -94,17 +94,17 @@ class _DetailsPageState extends State<DetailsPage> {
           ],
         ),
         actions: <Widget>[
-          RawMaterialButton(
-            constraints: BoxConstraints(),
-            child: Icon(
-              Icons.edit,
-              color: Colors.white,
-            ),
-            onPressed: () async {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => EditBuffetForm()));
-            },
-          ),
+          // RawMaterialButton(
+          //   constraints: BoxConstraints(),
+          //   child: Icon(
+          //     Icons.edit,
+          //     color: Colors.white,
+          //   ),
+          //   onPressed: () async {
+          //     Navigator.push(context,
+          //         MaterialPageRoute(builder: (context) => EditBuffetForm()));
+          //   },
+          // ),
           RawMaterialButton(
               constraints: BoxConstraints(),
               child: Icon(Icons.delete, color: Colors.white),
