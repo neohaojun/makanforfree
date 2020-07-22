@@ -1,10 +1,10 @@
 // import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'home.dart';
+import 'edit.dart';
 
 class DetailsPage extends StatefulWidget {
   final DocumentSnapshot buffet;
@@ -36,7 +36,7 @@ class _DetailsPageState extends State<DetailsPage> {
     Widget continueButton = RawMaterialButton(
       constraints: BoxConstraints(),
       child: Text("YES"),
-      textStyle: TextStyle(color: Colors.blue),
+      textStyle: TextStyle(color: Colors.red),
       onPressed: () {
         try {
           Firestore.instance
@@ -100,8 +100,10 @@ class _DetailsPageState extends State<DetailsPage> {
               Icons.edit,
               color: Colors.white,
             ),
-            // onTap: () => navigateToDetail(snapshot.data[index]),
-            onPressed: () async {},
+            onPressed: () async {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => EditBuffetForm()));
+            },
           ),
           RawMaterialButton(
               constraints: BoxConstraints(),
