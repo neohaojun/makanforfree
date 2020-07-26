@@ -20,6 +20,8 @@ class _HomeState extends State<Home> {
   DateTime expiry = DateTime.now();
   String expiryString = '';
   var circleColour = Colors.green;
+  // var notifIcon = Icons.notifications_off;
+  // bool notif = false;
 
   Future getBuffets() async {
     var firestore = Firestore.instance;
@@ -61,7 +63,15 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.white,
         elevation: 2.0,
         actions: <Widget>[
-          FlatButton(
+          // RawMaterialButton(
+          //     constraints: BoxConstraints(),
+          //     child: Icon(notifIcon, color: Colors.white),
+          //     onPressed: () async {
+          //       notifIcon = Icons.notifications_active;
+          //       notif = true;
+          //     }),
+          RawMaterialButton(
+            constraints: BoxConstraints(),
             child: Icon(
               Icons.exit_to_app,
               color: Color(0xff224966),

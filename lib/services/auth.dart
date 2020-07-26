@@ -4,8 +4,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:makanforfree/models/user.dart';
 
 class AuthService {
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  bool googleTrue = false;
 
   //create user object based on FirebaseUser
   User _userFromFirebaseUser(FirebaseUser user) {
@@ -14,17 +14,17 @@ class AuthService {
 
   //auth change user stream
   Stream<User> get user {
-    return _auth.onAuthStateChanged
-    .map(_userFromFirebaseUser);
+    return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
   }
 
   //sign in with email & password
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      AuthResult result = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
       FirebaseUser user = result.user;
       return _userFromFirebaseUser(user);
-    } catch(e) {
+    } catch (e) {
       print(e.toString());
       return null;
     }
@@ -33,10 +33,11 @@ class AuthService {
   //register with email & password
   Future registerWithEmailAndPassword(String email, String password) async {
     try {
-      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      AuthResult result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
       FirebaseUser user = result.user;
       return _userFromFirebaseUser(user);
-    } catch(e) {
+    } catch (e) {
       print(e.toString());
       return null;
     }
@@ -47,18 +48,18 @@ class AuthService {
     try {
       GoogleSignIn googleSignIn = GoogleSignIn();
       GoogleSignInAccount account = await googleSignIn.signIn();
-      if(account == null)
-        return false;
-      AuthResult result = await _auth.signInWithCredential(GoogleAuthProvider.getCredential(
+      if (account == null) return false;
+      AuthResult result =
+          await _auth.signInWithCredential(GoogleAuthProvider.getCredential(
         idToken: (await account.authentication).idToken,
         accessToken: (await account.authentication).accessToken,
       ));
+      googleTrue = true;
       // FirebaseUser user = result.user;
-      if(result.user == null)
-        return false;
-        return true;
+      if (result.user == null) return false;
+      return true;
     } catch (e) {
-      print(e.message);
+      print(e.toString());
       print("Error logging with google");
       return false;
     }
@@ -67,13 +68,15 @@ class AuthService {
   //sign out
   Future signOut() async {
     try {
-      // GoogleSignIn googleSignIn = GoogleSignIn();
-      // await googleSignIn.disconnect();
+      if (googleTrue == true) {}
+      GoogleSignIn googleSignIn = GoogleSignIn();
+      await googleSignIn.disconnect();
+      await FirebaseAuth.instance.signOut();
+      googleTrue = false;
       return await _auth.signOut();
-    } catch(e) {
+    } catch (e) {
       print(e.toString());
       return null;
     }
   }
-
 }
