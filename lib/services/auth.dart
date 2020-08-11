@@ -5,7 +5,6 @@ import 'package:makanforfree/models/user.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  bool googleTrue = false;
 
   //create user object based on FirebaseUser
   User _userFromFirebaseUser(FirebaseUser user) {
@@ -54,7 +53,6 @@ class AuthService {
         idToken: (await account.authentication).idToken,
         accessToken: (await account.authentication).accessToken,
       ));
-      googleTrue = true;
       // FirebaseUser user = result.user;
       if (result.user == null) return false;
       return true;
@@ -68,11 +66,9 @@ class AuthService {
   //sign out
   Future signOut() async {
     try {
-      if (googleTrue == true) {}
-      GoogleSignIn googleSignIn = GoogleSignIn();
-      await googleSignIn.disconnect();
-      await FirebaseAuth.instance.signOut();
-      googleTrue = false;
+      // GoogleSignIn googleSignIn = GoogleSignIn();
+      // await googleSignIn.disconnect();
+      // await FirebaseAuth.instance.signOut();
       return await _auth.signOut();
     } catch (e) {
       print(e.toString());
