@@ -20,7 +20,6 @@ MakanForFree is supported on both iOS and Android, but unfortunately has not fou
 <center>
 
 [![GitHub last commit](https://img.shields.io/github/last-commit/N-HJ/MakanForFree?style=flat)]()
-[![GitHub commit activity the past week, 4 weeks](https://img.shields.io/github/commit-activity/y/N-HJ/MakanForFree?style=flat)]()
 [![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)]()
 
 <br/>
