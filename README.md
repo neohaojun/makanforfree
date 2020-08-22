@@ -26,9 +26,4 @@ MakanForFree is supported on both iOS and Android, but unfortunately has not fou
 
 ![](http://estruyf-github.azurewebsites.net/api/VisitorHit?user=N-HJ&repo=MakanForFree&countColorcountColor&countColor=%237B1E7A)
 
-<br/>
-
-[![ForTheBadge built-by-developers](http://ForTheBadge.com/images/badges/built-by-developers.svg)]()
-[![ForTheBadge built-with-love](http://ForTheBadge.com/images/badges/built-with-love.svg)]()
-
 </center>
