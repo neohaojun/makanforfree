@@ -1,4 +1,4 @@
-# makanforfree
+# MakanForFree
 
 [![GitHub contributors](https://img.shields.io/github/contributors/N-HJ/MakanForFree.svg)](https://GitHub.com/N-HJ/MakanForFree/graphs/contributors/)
 [![GitHub issues](https://img.shields.io/github/issues/Naereen/StrapDown.js.svg)](https://GitHub.com/N-HJ/MakanForFree/issues/)
