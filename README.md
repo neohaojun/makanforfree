@@ -21,6 +21,7 @@ MakanForFree is supported on both iOS and Android, but unfortunately has not fou
 
 [![GitHub last commit](https://img.shields.io/github/last-commit/N-HJ/MakanForFree?style=flat)]()
 [![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)]()
+[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/neohaojun/MakanForFree/blob/master/LICENSE)
 
 <br/>
 
