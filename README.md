@@ -1,7 +1,7 @@
 # MakanForFree
 
 [![GitHub contributors](https://img.shields.io/github/contributors/neohaojun/MakanForFree.svg)](https://GitHub.com/neohaojun/MakanForFree/graphs/contributors/)
-[![GitHub issues](https://img.shields.io/github/issues/Naereen/StrapDown.js.svg)](https://GitHub.com/neohaojun/MakanForFree/issues/)
+[![GitHub issues](https://img.shields.io/github/issues/neohaojun/MakanForFree)](https://GitHub.com/neohaojun/MakanForFree/issues/)
 [![GitHub pull-requests](https://img.shields.io/github/issues-pr/neohaojun/MakanForFree.svg)](https://GitHub.com/neohaojun/MakanForFree/pull/)
 [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
