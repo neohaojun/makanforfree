@@ -39,9 +39,9 @@ class _DetailsPageState extends State<DetailsPage> {
       textStyle: TextStyle(color: Colors.red),
       onPressed: () {
         try {
-          Firestore.instance
+          FirebaseFirestore.instance
               .collection('buffets')
-              .document(documentId)
+              .doc(documentId)
               .delete();
         } catch (e) {
           print(e.toString());
@@ -53,7 +53,7 @@ class _DetailsPageState extends State<DetailsPage> {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Delete " + widget.buffet.data["title"] + "?"),
+      title: Text("Delete " + widget.buffet.data()["title"] + "?"),
       // content: Text("Delete this buffet?"),
       actions: [
         cancelButton,
@@ -72,11 +72,11 @@ class _DetailsPageState extends State<DetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.buffet.data["halal"] == true) {
+    if (widget.buffet.data()["halal"] == true) {
       halalString = "YES";
       halalColour = Colors.green;
     }
-    if (widget.buffet.data["vegetarian"] == true) {
+    if (widget.buffet.data()["vegetarian"] == true) {
       vegetarianString = "YES";
       vegetarianColour = Colors.green;
     }
@@ -109,7 +109,7 @@ class _DetailsPageState extends State<DetailsPage> {
               constraints: BoxConstraints(),
               child: Icon(Icons.delete, color: Colors.white),
               onPressed: () async {
-                documentId = widget.buffet.documentID;
+                documentId = widget.buffet.id;
                 showAlertDialog(context);
               }),
         ],
@@ -126,7 +126,7 @@ class _DetailsPageState extends State<DetailsPage> {
               Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  widget.buffet.data["title"],
+                  widget.buffet.data()["title"],
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
               ),
@@ -143,7 +143,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                   SizedBox(width: 15.0),
                   Text(
-                    widget.buffet.data["location"],
+                    widget.buffet.data()["location"],
                     style: TextStyle(fontSize: 15),
                   )
                 ],
@@ -157,7 +157,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                   SizedBox(width: 15.0),
                   Text(
-                    widget.buffet.data["amount"],
+                    widget.buffet.data()["amount"],
                     style: TextStyle(fontSize: 15),
                   )
                 ],
@@ -171,7 +171,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                   SizedBox(width: 15.0),
                   Text(
-                    widget.buffet.data["choices"],
+                    widget.buffet.data()["choices"],
                     style: TextStyle(fontSize: 15),
                   )
                 ],
@@ -190,7 +190,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   SizedBox(width: 15.0),
                   Text(
                     DateFormat("dd - MM - yyyy")
-                        .format(widget.buffet.data["expiry"].toDate())
+                        .format(widget.buffet.data()["expiry"].toDate())
                         .toString(),
                     style: TextStyle(fontSize: 15),
                   )
@@ -206,7 +206,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   SizedBox(width: 15.0),
                   Text(
                     DateFormat("kk : mm : ss")
-                        .format(widget.buffet.data["expiry"].toDate())
+                        .format(widget.buffet.data()["expiry"].toDate())
                         .toString(),
                     style: TextStyle(fontSize: 15),
                   )

@@ -26,7 +26,7 @@ class _EditBuffetFormState extends State<EditBuffetForm> {
   TextEditingController _choicesController;
 
   // final _user = User();
-  final firestoreInstance = Firestore.instance;
+  final firestoreInstance = FirebaseFirestore.instance;
   final _formKey = GlobalKey<FormState>();
   String _date = "Buffet Expiry Date";
   String _time = "Buffet Expiry Time";
@@ -315,7 +315,7 @@ class _EditBuffetFormState extends State<EditBuffetForm> {
                                 "vegetarian": _vegetarian,
                                 "expiry": _expiryDate,
                               }).then((value) {
-                                print(value.documentID);
+                                print(value.id);
                               });
 
                               Navigator.push(

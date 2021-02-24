@@ -24,12 +24,12 @@ class _HomeState extends State<Home> {
   // bool notif = false;
 
   Future getBuffets() async {
-    var firestore = Firestore.instance;
+    var firestore = FirebaseFirestore.instance;
     QuerySnapshot qn = await firestore
         .collection("buffets")
         .orderBy("expiry", descending: true)
-        .getDocuments();
-    return qn.documents;
+        .get();
+    return qn.docs;
   }
 
   navigateToDetail(DocumentSnapshot buffet) {
